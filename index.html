@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Milly's Arts 💖</title>
+
+  <!-- ===== Colors: roxo principal, branco, cinza e rosa ===== -->
+  <style>
+    :root{
+      --purple:#6B21A8; /* principal */
+      --purple-2:#8B5CF6;
+      --pink:#FF5DA2;
+      --bg:#0f1720;
+      --card:#111317;
+      --muted:#9AA0A6;
+      --white:#ffffff;
+      --light:#f7f7fb;
+      --success:#16a34a;
+      --danger:#ef4444;
+      --glass: rgba(255,255,255,0.04);
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #05060a 0%, #0b0d11 100%);
+      color:var(--light);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      min-height:100vh;
+    }
+
+    /* ===== Layout ===== */
+    .app{
+      display:flex;
+      width:100%;
+      height:100vh;
+      overflow:hidden;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      width:260px;
+      background: linear-gradient(180deg, rgba(107,33,168,0.95), rgba(139,92,246,0.88));
+      padding:22px;
+      box-sizing:border-box;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      color:var(--white);
+      min-width:220px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:6px;
+    }
+    .brand .logo{
+      width:52px;
+      height:52px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--pink),#ff7bbd);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:20px;
+      box-shadow: 0 6px 20px rgba(107,33,168,0.25);
+    }
+    .brand h1{
+      margin:0;
+      font-size:18px;
+      line-height:1;
+      font-weight:700;
+    }
+    .brand p{margin:0;font-size:12px;color:rgba(255,255,255,0.9);opacity:0.95}
+
+    nav{display:flex;flex-direction:column;gap:6px;margin-top:6px;}
+    .nav-item{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      user-select:none;
+      color:var(--light);
+      transition: background .18s, transform .08s;
+      font-size:14px;
+    }
+    .nav-item:hover{ background: rgba(255,255,255,0.06); transform:translateY(-1px); }
+    .nav-item.active{ background: rgba(255,255,255,0.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); }
+    .nav-item .chev{margin-left:auto;opacity:0.7;font-size:12px}
+
+    .sidebar-footer{
+      margin-top:auto;
+      font-size:13px;
+      color:rgba(255,255,255,0.85);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:var(--white);
+      color:var(--purple);
+      border-radius:8px;
+      padding:8px 12px;
+      font-weight:600;
+      cursor:pointer;
+      border:none;
+    }
+    .btn.secondary{
+      background:transparent;color:var(--white);
+      border:1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Main area */
+    .main{
+      flex:1;
+      overflow:auto;
+      padding:28px;
+      box-sizing:border-box;
+    }
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+    }
+    .search{
+      flex:1;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      background:var(--glass);
+      padding:10px 12px;border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .search input{
+      background:transparent;border:0;color:var(--light);outline:none;width:100%;
+    }
+
+    /* Home banner */
+    .banner{
+      display:flex;
+      gap:24px;
+      align-items:center;
+      padding:28px;
+      border-radius:16px;
+      background: linear-gradient(90deg, rgba(107,33,168,0.85), rgba(139,92,246,0.7));
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      color:var(--white);
+      flex-wrap:wrap;
+    }
+    .banner .left{
+      flex:1;
+      min-width:260px;
+    }
+    .banner h2{
+      margin:0 0 12px 0;
+      font-size:34px;
+      letter-spacing:-0.02em;
+    }
+    .banner p{margin:0 0 18px 0;color:rgba(255,255,255,0.95);opacity:0.95}
+    .banner .cta{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .cta .btn{
+      background:var(--white);
+      color:var(--purple);
+      padding:12px 18px;font-weight:700;border-radius:10px;
+    }
+    .banner .right{
+      width:360px;
+      height:200px;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+      border:4px solid rgba(255,255,255,0.03);
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background-size:cover;
+      background-position:center;
+    }
+
+    /* Product section */
+    .section{
+      margin-top:20px;
+    }
+    .section h3{
+      margin:0 0 12px 0;
+      font-size:20px;
+      color:var(--light);
+    }
+
+    .products-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+      gap:16px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:10px;
+      box-sizing:border-box;
+      border:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:320px;
+    }
+    .card .img{
+      height:160px;
+      border-radius:10px;
+      background-size:cover;
+      background-position:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .tag-reco{
+      position:absolute; left:10px; top:10px; background:var(--pink); padding:6px 8px; border-radius:8px; font-size:12px;font-weight:700;color:white;
+      box-shadow:0 6px 16px rgba(255,93,162,0.12);
+    }
+    .fav-btn{
+      position:absolute; right:8px; top:8px; background:rgba(0,0,0,0.35); padding:8px;border-radius:8px; cursor:pointer;
+    }
+
+    .card .info{ display:flex; flex-direction:column; gap:6px; padding:0 2px; }
+    .card .title{ font-weight:700; font-size:16px; }
+    .card .desc{ font-size:13px; color:var(--muted); min-height:36px; }
+    .card .price-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:auto; }
+    .price{ font-weight:800; font-size:18px; color:var(--pink); }
+    .card .row{ display:flex; gap:8px; align-items:center; }
+
+    /* Admin pages */
+    .table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:8px;
+      background:transparent;
+    }
+    .table thead th{
+      text-align:left;
+      padding:10px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .table tbody td{
+      padding:10px;
+      font-size:14px;
+      border-top:1px solid rgba(255,255,255,0.03);
+    }
+    .actions button{ margin-right:8px; }
+
+    /* Modal */
+    .modal-backdrop{
+      position:fixed; inset:0;
+      display:none;
+      background:rgba(0,0,0,0.55);
+      align-items:center; justify-content:center;
+      z-index:1200;
+    }
+    .modal{
+      width:920px; max-width:96%; background:linear-gradient(180deg,#0b0c0f,#0e1114); padding:20px; border-radius:12px; box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+      border:1px solid rgba(255,255,255,0.03);
+      color:var(--light);
+    }
+    .modal h4{ margin:0 0 14px 0; font-size:18px; }
+    .form-row{ display:flex; gap:12px; margin-bottom:10px; }
+    .form-row .col{ flex:1; display:flex; flex-direction:column; gap:8px; }
+    .input, textarea, select{
+      padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+      background:transparent;color:var(--light); outline:none; resize:vertical;
+    }
+    .switch{
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .small{ font-size:13px; color:var(--muted); }
+
+    /* Cart / checkout */
+    .checkout{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:20px;
+      align-items:start;
+    }
+    .card.panel{
+      padding:16px;
+    }
+    .steps{ display:flex; gap:8px; margin-bottom:12px; }
+    .step{ padding:8px 12px; border-radius:8px; background:rgba(255,255,255,0.02); font-size:13px; }
+    .summary{ background:rgba(255,255,255,0.02); padding:12px; border-radius:10px; }
+
+    /* Utilities */
+    .hidden{ display:none !important; }
+    .flex{ display:flex; align-items:center; gap:8px; }
+    .muted{ color:var(--muted); }
+    .pill{ padding:6px 10px; background:rgba(255,255,255,0.03); border-radius:999px; font-size:13px; }
+
+    /* Responsive */
+    @media(max-width:980px){
+      .sidebar{ display:none; }
+      .main{ padding:18px; }
+      .checkout{ grid-template-columns:1fr; }
+      .banner .right{ width:100%; height:160px; }
+    }
+    @media(max-width:520px){
+      .banner h2{ font-size:22px; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="logo">M</div>
+        <div>
+          <h1>Milly's Arts 💖</h1>
+          <p>Arte, amor e lembranças únicas</p>
+        </div>
+      </div>
+
+      <nav id="menu">
+        <div class="nav-item active" data-page="home">Início <span class="chev">›</span></div>
+        <div class="nav-item" data-page="cart">Carrinho <span class="chev">›</span></div>
+        <div class="nav-item" data-page="wishlist">Lista de Desejos <span class="chev">›</span></div>
+        <div class="nav-item" data-page="orders">Meus Pedidos <span class="chev">›</span></div>
+
+        <div style="margin-top:10px;color:rgba(255,255,255,0.54);font-weight:700;font-size:12px">Produtos</div>
+        <div class="nav-item" data-page="products">Todos os Produtos <span class="chev">›</span></div>
+        <div class="nav-item" style="padding-left:24px" data-page="category-Buquê">— Buquê</div>
+        <div class="nav-item" style="padding-left:24px" data-page="category-Rosa Única">— Rosa Única</div>
+        <div class="nav-item" style="padding-left:24px" data-page="category-Quadros">— Quadros</div>
+        <div class="nav-item" style="padding-left:24px" data-page="category-Fotos">— Fotos</div>
+        <div class="nav-item" style="padding-left:24px" data-page="category-Livrinho Personalizado">— Livrinho Personalizado</div>
+        <div class="nav-item" style="padding-left:24px" data-page="category-Chaveiro Personalizado">— Chaveiro Personalizado</div>
+        <div class="nav-item" style="padding-left:24px" data-page="category-Outros">— Outros</div>
+
+        <div style="margin-top:10px;color:rgba(255,255,255,0.54);font-weight:700;font-size:12px">Administração</div>
+        <div class="nav-item hidden" id="nav-admin" data-page="admin">Administração <span class="chev">›</span></div>
+        <div class="nav-item hidden" id="nav-manage" data-page="manage">Gerenciar Produtos <span class="chev">›</span></div>
+        <div class="nav-item hidden" id="nav-cats" data-page="categories">Categorias <span class="chev">›</span></div>
+        <div class="nav-item hidden" id="nav-settings" data-page="settings">Configurações <span class="chev">›</span></div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div>
+          <div style="font-weight:700">Modo: <span id="modeLabel">Visitante</span></div>
+          <div class="small muted">Admin local disponível</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+          <button class="btn" id="btn-admin">Entrar como Admin</button>
+          <button class="btn secondary" id="btn-logout" style="display:none;">Sair</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main" id="main">
+      <div class="topbar">
+        <div class="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:0.8"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <input id="searchInput" placeholder="Pesquisar produtos, categorias..." />
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+            <div class="pill" id="cartCount">🛒 0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pages container -->
+      <div id="pages">
+
+        <!-- Home -->
+        <section id="home" class="page">
+          <div class="banner">
+            <div class="left">
+              <h2>Milly's Arts 💖</h2>
+              <p>Arte, amor e lembranças únicas — descubra nossas criações personalizadas e produtos em destaque.</p>
+              <div class="cta">
+                <button class="btn" id="btnViewProducts">Ver Produtos</button>
+                <button class="btn secondary" id="btnWishlist">Ver Lista de Desejos</button>
+              </div>
+            </div>
+            <div class="right" id="bannerImg" style="background-image:url('https://picsum.photos/seed/milly1/900/600')"></div>
+          </div>
+
+          <!-- produtos recomendados -->
+          <div class="section">
+            <h3>Recomendados para você</h3>
+            <div class="products-grid" id="recommendedGrid">
+              <!-- cards gerados via JS -->
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Products -->
+        <section id="products" class="page hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <h3>Produtos</h3>
+            <div class="flex">
+              <span class="small muted">Categoria:</span>
+              <select id="filterCategory" class="input" style="width:180px;background:transparent;border:1px solid rgba(255,255,255,0.03)">
+                <option value="all">Todas</option>
+              </select>
+              <button class="btn" id="btnAddProduct" style="margin-left:8px">Novo Produto</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="products-grid" id="productsGrid"></div>
+          </div>
+        </section>
+
+        <!-- Cart -->
+        <section id="cart" class="page hidden">
+          <h3>Carrinho</h3>
+          <div class="checkout">
+            <div>
+              <div class="card panel">
+                <div class="steps">
+                  <div class="step">1. Informações</div>
+                  <div class="step">2. Pagamento</div>
+                  <div class="step">3. Revisão</div>
+                </div>
+
+                <div id="checkoutContent">
+                  <div id="checkout-info">
+                    <div style="display:flex;gap:12px;flex-direction:column">
+                      <label>Nome do Cliente</label>
+                      <input id="custName" class="input" placeholder="Seu nome" />
+                      <label>Endereço / Observações</label>
+                      <textarea id="custAddress" class="input" rows="3" placeholder="Observações, endereço, cor, personalização..."></textarea>
+                    </div>
+                    <hr style="border:none;border-top:1px dashed rgba(255,255,255,0.03);margin:14px 0;">
+                    <div>
+                      <label class="small muted">Cupom de Desconto</label>
+                      <div style="display:flex;gap:8px">
+                        <input id="coupon" class="input" placeholder="Código do cupom" />
+                        <button class="btn" id="applyCoupon">Aplicar</button>
+                      </div>
+                      <div id="couponMsg" class="small muted" style="margin-top:8px"></div>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:16px">
+                      <button class="btn" id="btnToPayment">Continuar para pagamento</button>
+                    </div>
+                  </div>
+
+                  <div id="checkout-payment" class="hidden">
+                    <div style="margin-bottom:8px" class="small muted">Escolha o método de pagamento</div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <label class="pill"><input type="radio" name="method" value="money" checked/> Dinheiro em Mãos</label>
+                      <label class="pill"><input type="radio" name="method" value="pix" /> PIX</label>
+                    </div>
+                    <div style="margin-top:14px">
+                      <button class="btn" id="btnToReview">Ir para Revisão</button>
+                      <button class="btn secondary" id="btnBackToInfo">Voltar</button>
+                    </div>
+                  </div>
+
+                  <div id="checkout-review" class="hidden">
+                    <div style="margin-bottom:12px">Confira seu pedido e finalize.</div>
+                    <div id="reviewList"></div>
+                    <div style="display:flex;gap:8px;margin-top:12px">
+                      <button class="btn" id="btnFinish">Finalizar Pedido</button>
+                      <button class="btn secondary" id="btnBackToPayment">Voltar</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <aside>
+              <div class="card summary">
+                <h4>Resumo do Pedido</h4>
+                <div id="summaryItems" style="margin-top:8px"></div>
+                <hr style="border:none;border-top:1px dashed rgba(255,255,255,0.03);margin:12px 0;">
+                <div style="display:flex;justify-content:space-between"><div>Subtotal</div><div id="subTotal">R$ 0,00</div></div>
+                <div style="display:flex;justify-content:space-between"><div>Desconto</div><div id="discount">R$ 0,00</div></div>
+                <div style="display:flex;justify-content:space-between;font-weight:800;font-size:18px"><div>Total</div><div id="totalPrice">R$ 0,00</div></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- Wishlist -->
+        <section id="wishlist" class="page hidden">
+          <h3>Lista de Desejos</h3>
+          <div class="products-grid" id="wishlistGrid"></div>
+        </section>
+
+        <!-- Orders -->
+        <section id="orders" class="page hidden">
+          <h3>Meus Pedidos</h3>
+          <div id="ordersList" class="section">
+            <div class="small muted">Seus pedidos finalizados aparecerão aqui.</div>
+          </div>
+        </section>
+
+        <!-- Admin overview -->
+        <section id="admin" class="page hidden">
+          <h3>Administração</h3>
+          <div style="display:flex;gap:12px;align-items:center">
+            <button class="btn" id="openManage">Gerenciar Produtos</button>
+            <button class="btn" id="openCategories">Categorias</button>
+            <button class="btn" id="openSettings">Configurações</button>
+          </div>
+        </section>
+
+        <!-- Manage Products -->
+        <section id="manage" class="page hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3>Gerenciar Produtos</h3>
+            <div>
+              <button class="btn" id="newProductBtn">Novo Produto</button>
+              <button class="btn secondary" id="syncBtn">Exportar / Importar</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <table class="table" id="manageTable">
+              <thead>
+                <tr>
+                  <th>Imagem</th><th>Nome</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Destaque</th><th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="manageBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Categories -->
+        <section id="categories" class="page hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3>Categorias</h3>
+            <button class="btn" id="btnNewCategory">Nova Categoria</button>
+          </div>
+          <div class="section">
+            <div id="categoriesList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px"></div>
+          </div>
+        </section>
+
+        <!-- Settings -->
+        <section id="settings" class="page hidden">
+          <h3>Configurações</h3>
+          <div class="card panel">
+            <form id="settingsForm">
+              <div class="form-row">
+                <div class="col">
+                  <label>Logo (URL)</label>
+                  <input id="settingLogo" class="input" placeholder="https://..." />
+                </div>
+                <div class="col">
+                  <label>Título principal</label>
+                  <input id="settingTitle" class="input" placeholder="Milly's Arts 💖" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <label>Subtítulo</label>
+                  <input id="settingSubtitle" class="input" placeholder="Arte, amor e lembranças únicas" />
+                </div>
+                <div class="col">
+                  <label>Imagem de Fundo (bannerURL)</label>
+                  <input id="settingBanner" class="input" placeholder="https://..." />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col">
+                  <label>WhatsApp</label>
+                  <input id="settingWhats" class="input" placeholder="551199999999" />
+                </div>
+                <div class="col">
+                  <label>E-mail</label>
+                  <input id="settingEmail" class="input" placeholder="contato@exemplo.com" />
+                </div>
+              </div>
+
+              <div style="display:flex;gap:8px;margin-top:12px">
+                <button class="btn" id="saveSettings">Salvar</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modal backdrop -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" id="modal">
+      <!-- dynamic content -->
+    </div>
+  </div>
+
+  <!-- ===== JavaScript ===== -->
+  <script>
+    /*************************************************************************
+     * Milly's Arts - Single file app
+     * Admin: local mode (senha admin123)
+     * Storage: localStorage
+     *************************************************************************/
+
+    /* ---------- Utilities ---------- */
+    const qs=(s,el=document)=>el.querySelector(s);
+    const qsa=(s,el=document)=>Array.from(el.querySelectorAll(s));
+    const money=(v)=>'R$ '+Number(v).toFixed(2).replace('.',',');
+    const uid=(n='id')=>n+'_'+Math.random().toString(36).slice(2,9);
+
+    /* ---------- Default data ---------- */
+    const DEFAULT_PRODUCTS = [
+      {id:uid('p'), name:'Buquê Rosas Mistas', desc:'Buquê com 12 rosas selecionadas', price:79.9, stock:12, category:'Buquê', image:'https://picsum.photos/seed/rose1/600/400', images:[], featured:true, active:true, recommended:true},
+      {id:uid('p'), name:'Rosa Única Encanto', desc:'Rosa única preservada em caixa', price:39.9, stock:8, category:'Rosa Única', image:'https://picsum.photos/seed/rose2/600/400', images:[], featured:false, active:true, recommended:true},
+      {id:uid('p'), name:'Quadro Floral 30x30', desc:'Quadro decorativo em madeira', price:129.9, stock:5, category:'Quadros', image:'https://picsum.photos/seed/quad1/600/400', images:[], featured:false, active:true, recommended:false},
+      {id:uid('p'), name:'Mini Livrinho Personalizado', desc:'Livro com mensagens e fotos', price:54.5, stock:18, category:'Livrinho Personalizado', image:'https://picsum.photos/seed/book1/600/400', images:[], featured:true, active:true, recommended:true},
+      {id:uid('p'), name:'Chaveiro Personalizado', desc:'Chaveiro com foto e nome', price:19.9, stock:40, category:'Chaveiro Personalizado', image:'https://picsum.photos/seed/key1/600/400', images:[], featured:false, active:true, recommended:false},
+    ];
+
+    const DEFAULT_CATEGORIES = ['Buquê','Rosa Única','Quadros','Fotos','Livrinho Personalizado','Chaveiro Personalizado','Outros'];
+
+    const DEFAULT_SETTINGS = {
+      logo: '',
+      title: "Milly's Arts 💖",
+      subtitle: "Arte, amor e lembranças únicas",
+      banner: 'https://picsum.photos/seed/milly1/900/600',
+      whatsapp: '558291016562',
+      email: 'contato@example.com'
+    };
+
+    const ADMIN_PASSWORD = 'admin123'; // modo local
+
+    /* ---------- State helpers (localStorage) ---------- */
+    const store = {
+      get(key, fallback){
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      },
+      set(key,val){ localStorage.setItem(key, JSON.stringify(val)); }
+    };
+
+    let products = store.get('ma_products', DEFAULT_PRODUCTS);
+    let categories = store.get('ma_categories', DEFAULT_CATEGORIES);
+    let settings = store.get('ma_settings', DEFAULT_SETTINGS);
+    let cart = store.get('ma_cart', []);
+    let wishlist = store.get('ma_wishlist', []);
+    let orders = store.get('ma_orders', []);
+    let isAdmin = store.get('ma_admin', false);
+    let couponApplied = { code:null, discount:0 };
+
+    /* ---------- Initial DOM refs ---------- */
+    const pages = qs('#pages');
+    const menuItems = qsa('#menu .nav-item');
+    const modeLabel = qs('#modeLabel');
+    const btnAdmin = qs('#btn-admin');
+    const btnLogout = qs('#btn-logout');
+    const navAdmin = qs('#nav-admin');
+    const navManage = qs('#nav-manage');
+    const navCats = qs('#nav-cats');
+    const navSettings = qs('#nav-settings');
+    const cartCount = qs('#cartCount');
+
+    const bannerImg = qs('#bannerImg');
+    const recommendedGrid = qs('#recommendedGrid');
+    const productsGrid = qs('#productsGrid');
+    const filterCategory = qs('#filterCategory');
+    const wishlistGrid = qs('#wishlistGrid');
+    const manageBody = qs('#manageBody');
+    const categoriesList = qs('#categoriesList');
+    const settingsForm = qs('#settingsForm');
+
+    const modalBackdrop = qs('#modalBackdrop');
+    const modal = qs('#modal');
+
+    const summaryItems = qs('#summaryItems');
+    const subTotalEl = qs('#subTotal');
+    const totalPriceEl = qs('#totalPrice');
+    const discountEl = qs('#discount');
+
+    const searchInput = qs('#searchInput');
+
+    /* ---------- Navigation ---------- */
+    function showPage(id){
+      qsa('.page').forEach(p=>p.classList.add('hidden'));
+      const page = qs('#'+id);
+      if(page) page.classList.remove('hidden');
+
+      // active menu
+      menuItems.forEach(it=>it.classList.toggle('active', it.dataset.page === id || it.dataset.page === ('category-'+id)));
+      // show/hide admin navs
+      if(isAdmin){
+        navAdmin.classList.remove('hidden');
+        navManage.classList.remove('hidden');
+        navCats.classList.remove('hidden');
+        navSettings.classList.remove('hidden');
+        qs('#sidebar').classList.remove('no-admin');
+      } else {
+        navAdmin.classList.add('hidden');
+        navManage.classList.add('hidden');
+        navCats.classList.add('hidden');
+        navSettings.classList.add('hidden');
+      }
+    }
+    // click events for menu
+    menuItems.forEach(it=>{
+      it.addEventListener('click', ()=> {
+        const page = it.dataset.page;
+        if(page && page.startsWith('category-')){
+          const cat = page.replace('category-','');
+          openCategory(cat);
+        } else {
+          showPage(page);
+        }
+      });
+    });
+
+    /* ---------- Admin login ---------- */
+    btnAdmin.addEventListener('click', ()=>{
+      if(isAdmin){
+        alert('Você já está logado como admin.');
+        return;
+      }
+      const pwd = prompt('Senha de administrador (modo local):');
+      if(pwd === ADMIN_PASSWORD){
+        isAdmin = true; store.set('ma_admin', true);
+        modeLabel.innerText = 'Admin';
+        btnAdmin.style.display='none';
+        btnLogout.style.display='inline-flex';
+        updateAdminVisibility();
+        alert('Modo administrador ativado.');
+        showPage('admin');
+      } else {
+        alert('Senha incorreta.');
+      }
+    });
+    btnLogout.addEventListener('click', ()=>{
+      isAdmin = false; store.set('ma_admin', false);
+      modeLabel.innerText = 'Visitante';
+      btnAdmin.style.display='inline-flex';
+      btnLogout.style.display='none';
+      updateAdminVisibility();
+      showPage('home');
+    });
+
+    function updateAdminVisibility(){
+      if(isAdmin){
+        modeLabel.innerText='Administrador';
+        navAdmin.classList.remove('hidden');
+        navManage.classList.remove('hidden');
+        navCats.classList.remove('hidden');
+        navSettings.classList.remove('hidden');
+      } else {
+        modeLabel.innerText='Visitante';
+        navAdmin.classList.add('hidden');
+        navManage.classList.add('hidden');
+        navCats.classList.add('hidden');
+        navSettings.classList.add('hidden');
+      }
+    }
+
+    /* ---------- Render functions ---------- */
+    function renderCategoriesFilter(){
+      filterCategory.innerHTML = '<option value="all">Todas</option>';
+      categories.forEach(c=>{
+        const opt = document.createElement('option'); opt.value=c; opt.textContent=c;
+        filterCategory.appendChild(opt);
+      });
+    }
+
+    function renderRecommended(){
+      recommendedGrid.innerHTML='';
+      products.filter(p=>p.recommended && p.active).forEach(p=>{
+        recommendedGrid.appendChild(createProductCard(p,true));
+      });
+    }
+
+    function createProductCard(p, compact=false){
+      const card = document.createElement('div'); card.className='card';
+      const img = document.createElement('div'); img.className='img'; img.style.backgroundImage = `url('${p.image}')`;
+      if(p.recommended) img.innerHTML = `<div class="tag-reco">RECOMENDADO</div>`;
+      img.innerHTML += `<div class="fav-btn" data-id="${p.id}">💗</div>`;
+      card.appendChild(img);
+
+      const info = document.createElement('div'); info.className='info';
+      info.innerHTML = `<div class="title">${p.name}</div><div class="desc">${p.desc}</div>`;
+      const priceRow = document.createElement('div'); priceRow.className='price-row';
+      priceRow.innerHTML = `<div class="price">${money(p.price)}</div>
+                            <div class="row">
+                              <button class="btn" data-add="${p.id}">Adicionar</button>
+                              ${isAdmin?'<button class="btn secondary" data-edit="'+p.id+'">Editar</button>':''}
+                            </div>`;
+      info.appendChild(priceRow);
+      card.appendChild(info);
+
+      // events
+      card.querySelectorAll('[data-add]').forEach(b=>{
+        b.addEventListener('click', ()=> {
+          addToCart(p.id,1);
+        });
+      });
+      card.querySelectorAll('.fav-btn').forEach(f=>{
+        f.addEventListener('click', (e)=>{
+          e.stopPropagation();
+          toggleWishlist(p.id);
+        });
+      });
+      card.querySelectorAll('[data-edit]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          openEditProduct(btn.dataset.edit);
+        });
+      });
+
+      return card;
+    }
+
+    function renderProductsGrid(filter='all', search=''){
+      productsGrid.innerHTML='';
+      const items = products.filter(p=>{
+        if(!p.active) return false;
+        if(filter!=='all' && p.category !== filter) return false;
+        if(search && ! (p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search)) ) return false;
+        return true;
+      });
+      if(items.length===0){
+        productsGrid.innerHTML = `<div class="small muted">Nenhum produto encontrado.</div>`;
+        return;
+      }
+      items.forEach(p=>productsGrid.appendChild(createProductCard(p)));
+    }
+
+    function renderWishlist(){
+      wishlistGrid.innerHTML='';
+      wishlist.forEach(id=>{
+        const p = products.find(x=>x.id===id);
+        if(p) wishlistGrid.appendChild(createProductCard(p));
+      });
+    }
+
+    function renderManage(){
+      manageBody.innerHTML='';
+      products.forEach(p=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td style="width:110px"><div style="width:100px;height:60px;background-image:url('${p.image}');background-size:cover;border-radius:8px"></div></td>
+                        <td>${p.name}</td>
+                        <td>${p.category}</td>
+                        <td>${money(p.price)}</td>
+                        <td>${p.stock}</td>
+                        <td>${p.featured? 'Sim':'Não'}</td>
+                        <td class="actions">
+                          <button class="btn" data-edit="${p.id}">Editar</button>
+                          <button class="btn secondary" data-del="${p.id}">Excluir</button>
+                        </td>`;
+        manageBody.appendChild(tr);
+
+        tr.querySelectorAll('[data-edit]').forEach(b=> b.addEventListener('click', ()=> openEditProduct(b.dataset.edit)));
+        tr.querySelectorAll('[data-del]').forEach(b=> b.addEventListener('click', ()=> {
+          if(confirm('Excluir produto?')) { products = products.filter(x=>x.id!==b.dataset.del); saveAll(); renderAll(); }
+        }));
+      });
+    }
+
+    function renderCategories(){
+      categoriesList.innerHTML='';
+      categories.forEach(c=>{
+        const el = document.createElement('div');
+        el.className='card';
+        el.style.padding='12px';
+        el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:700">${c}</div><div><button class="btn secondary" data-del="${c}">Excluir</button></div></div>`;
+        categoriesList.appendChild(el);
+        el.querySelectorAll('[data-del]').forEach(b=> b.addEventListener('click', ()=> {
+          if(confirm('Excluir categoria "'+c+'"? (os produtos permanecerão com essa categoria)')){
+            categories = categories.filter(x=>x!==c);
+            saveAll(); renderAll();
+          }
+        }));
+      });
+    }
+
+    function renderSettingsForm(){
+      qs('#settingLogo').value = settings.logo || '';
+      qs('#settingTitle').value = settings.title || '';
+      qs('#settingSubtitle').value = settings.subtitle || '';
+      qs('#settingBanner').value = settings.banner || '';
+      qs('#settingWhats').value = settings.whatsapp || '';
+      qs('#settingEmail').value = settings.email || '';
+      bannerImg.style.backgroundImage = `url('${settings.banner}')`;
+      qs('.brand .logo').style.background = settings.logo ? `url('${settings.logo}') center/cover` : 'linear-gradient(135deg,var(--pink),#ff7bbd)';
+      qs('.brand h1').innerText = settings.title || "Milly's Arts 💖";
+      qs('.brand p').innerText = settings.subtitle || 'Arte, amor e lembranças únicas';
+    }
+
+    /* ---------- Cart & Checkout ---------- */
+    function updateCartCount(){
+      const total = cart.reduce((s,i)=>s+i.qty,0);
+      cartCount.innerText = '🛒 '+total;
+      store.set('ma_cart', cart);
+    }
+
+    function addToCart(productId, qty=1){
+      const p = products.find(x=>x.id===productId);
+      if(!p) return alert('Produto não encontrado.');
+      const item = cart.find(c=>c.id===productId);
+      if(item) item.qty += qty;
+      else cart.push({ id:productId, qty});
+      saveAll();
+      updateCartCount();
+      alert('Adicionado ao carrinho.');
+    }
+
+    function toggleWishlist(productId){
+      if(wishlist.includes(productId)){
+        wishlist = wishlist.filter(x=>x!==productId);
+      } else {
+        wishlist.push(productId);
+      }
+      store.set('ma_wishlist', wishlist);
+      renderWishlist();
+      alert('Atualizado na lista de desejos.');
+    }
+
+    function renderSummary(){
+      const items = cart.map(ci=>{
+        const p = products.find(x=>x.id===ci.id);
+        return { ...p, qty:ci.qty, subtotal: p.price * ci.qty };
+      });
+      summaryItems.innerHTML = '';
+      let subtotal = 0;
+      items.forEach(it=>{
+        const el = document.createElement('div');
+        el.style.display='flex';
+        el.style.justifyContent='space-between';
+        el.style.marginBottom='8px';
+        el.innerHTML = `<div>${it.name} x${it.qty}</div><div>${money(it.subtotal)}</div>`;
+        summaryItems.appendChild(el);
+        subtotal += it.subtotal;
+      });
+      const discount = couponApplied.discount ? (subtotal * couponApplied.discount) : 0;
+      subTotalEl.innerText = money(subtotal);
+      discountEl.innerText = money(discount);
+      totalPriceEl.innerText = money(subtotal - discount);
+    }
+
+    /* ---------- Modals (Novo Produto, Categorias) ---------- */
+
+    function openModal(html){
+      modal.innerHTML = html;
+      modalBackdrop.style.display='flex';
+      window.scrollTo(0,0);
+    }
+    function closeModal(){
+      modalBackdrop.style.display='none';
+      modal.innerHTML='';
+    }
+
+    modalBackdrop.addEventListener('click', (e)=>{
+      if(e.target === modalBackdrop) closeModal();
+    });
+
+    // Novo produto form
+    function openNewProduct(){
+      openModal(`
+        <h4>Novo Produto</h4>
+        <div class="form-row">
+          <div class="col"><label>Nome</label><input id="p_name" class="input" /></div>
+          <div class="col"><label>Preço</label><input id="p_price" class="input" type="number" step="0.01" /></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Categoria</label><select id="p_cat" class="input">${categories.map(c=>'<option>'+c+'</option>').join('')}</select></div>
+          <div class="col"><label>Estoque</label><input id="p_stock" class="input" type="number" value="1" /></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Imagem Principal (URL)</label><input id="p_image" class="input" placeholder="https://" /></div>
+          <div class="col"><label>Imagens adicionais (URLs separados por vírgula)</label><input id="p_images" class="input" placeholder="https://, https://..." /></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Descrição</label><textarea id="p_desc" class="input" rows="3"></textarea></div>
+          <div class="col">
+            <label class="small muted">Opções</label>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+              <label><input type="checkbox" id="p_feat" /> Produto em destaque</label>
+              <label><input type="checkbox" id="p_active" checked /> Produto ativo</label>
+              <label><input type="checkbox" id="p_reco" /> Recomendado</label>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+          <button class="btn" id="saveNewProd">Salvar</button>
+          <button class="btn secondary" id="cancelNewProd">Cancelar</button>
+        </div>
+      `);
+
+      qs('#cancelNewProd').addEventListener('click', closeModal);
+      qs('#saveNewProd').addEventListener('click', ()=>{
+        const newP = {
+          id: uid('p'),
+          name: qs('#p_name').value || 'Produto sem nome',
+          desc: qs('#p_desc').value || '',
+          price: Number(qs('#p_price').value) || 0,
+          stock: Number(qs('#p_stock').value) || 0,
+          category: qs('#p_cat').value || 'Outros',
+          image: qs('#p_image').value || 'https://picsum.photos/seed/'+Math.random().toString(36).slice(2,6)+'/600/400',
+          images: qs('#p_images').value ? qs('#p_images').value.split(',').map(s=>s.trim()) : [],
+          featured: !!qs('#p_feat').checked,
+          active: !!qs('#p_active').checked,
+          recommended: !!qs('#p_reco').checked
+        };
+        products.unshift(newP);
+        saveAll();
+        renderAll();
+        closeModal();
+        alert('Produto criado.');
+      });
+    }
+
+    // Edit product
+    function openEditProduct(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return alert('Produto não encontrado.');
+      openModal(`
+        <h4>Editar Produto</h4>
+        <div class="form-row">
+          <div class="col"><label>Nome</label><input id="p_name" class="input" value="${escapeHtml(p.name)}" /></div>
+          <div class="col"><label>Preço</label><input id="p_price" class="input" type="number" step="0.01" value="${p.price}" /></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Categoria</label><select id="p_cat" class="input">${categories.map(c=>'<option'+(c===p.category?' selected':'')+'>'+c+'</option>').join('')}</select></div>
+          <div class="col"><label>Estoque</label><input id="p_stock" class="input" type="number" value="${p.stock}" /></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Imagem Principal (URL)</label><input id="p_image" class="input" value="${p.image}" /></div>
+          <div class="col"><label>Imagens adicionais (URLs separados por vírgula)</label><input id="p_images" class="input" value="${(p.images||[]).join(', ')}" /></div>
+        </div>
+        <div class="form-row">
+          <div class="col"><label>Descrição</label><textarea id="p_desc" class="input" rows="3">${escapeHtml(p.desc)}</textarea></div>
+          <div class="col">
+            <label class="small muted">Opções</label>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+              <label><input type="checkbox" id="p_feat" ${p.featured? 'checked':''} /> Produto em destaque</label>
+              <label><input type="checkbox" id="p_active" ${p.active? 'checked':''} /> Produto ativo</label>
+              <label><input type="checkbox" id="p_reco" ${p.recommended? 'checked':''} /> Recomendado</label>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+          <button class="btn" id="updateProd">Salvar</button>
+          <button class="btn secondary" id="cancelEdit">Cancelar</button>
+        </div>
+      `);
+
+      qs('#cancelEdit').addEventListener('click', closeModal);
+      qs('#updateProd').addEventListener('click', ()=>{
+        p.name = qs('#p_name').value || p.name;
+        p.price = Number(qs('#p_price').value) || p.price;
+        p.stock = Number(qs('#p_stock').value) || p.stock;
+        p.category = qs('#p_cat').value || p.category;
+        p.image = qs('#p_image').value || p.image;
+        p.images = qs('#p_images').value ? qs('#p_images').value.split(',').map(s=>s.trim()) : [];
+        p.desc = qs('#p_desc').value || p.desc;
+        p.featured = !!qs('#p_feat').checked;
+        p.active = !!qs('#p_active').checked;
+        p.recommended = !!qs('#p_reco').checked;
+        saveAll(); renderAll(); closeModal(); alert('Produto atualizado.');
+      });
+    }
+
+    /* ---------- Categories modal ---------- */
+    function openNewCategory(){
+      openModal(`
+        <h4>Nova Categoria</h4>
+        <div class="form-row">
+          <div class="col"><label>Nome da categoria</label><input id="cat_name" class="input" /></div>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+          <button class="btn" id="saveCat">Salvar</button>
+          <button class="btn secondary" id="cancelCat">Cancelar</button>
+        </div>
+      `);
+      qs('#cancelCat').addEventListener('click', closeModal);
+      qs('#saveCat').addEventListener('click', ()=>{
+        const v = qs('#cat_name').value.trim();
+        if(!v) return alert('Digite o nome da categoria.');
+        if(categories.includes(v)) return alert('Essa categoria já existe.');
+        categories.push(v);
+        saveAll(); renderAll(); closeModal(); alert('Categoria criada.');
+      });
+    }
+
+    /* ---------- Settings save ---------- */
+    qs('#saveSettings').addEventListener('click', (e)=>{
+      e.preventDefault();
+      settings.logo = qs('#settingLogo').value.trim();
+      settings.title = qs('#settingTitle').value.trim();
+      settings.subtitle = qs('#settingSubtitle').value.trim();
+      settings.banner = qs('#settingBanner').value.trim() || settings.banner;
+      settings.whatsapp = qs('#settingWhats').value.trim();
+      settings.email = qs('#settingEmail').value.trim();
+      saveAll(); renderAll();
+      alert('Configurações salvas.');
+    });
+
+    /* ---------- Checkout flow ---------- */
+    qs('#btnToPayment').addEventListener('click', ()=>{
+      qs('#checkout-info').classList.add('hidden');
+      qs('#checkout-payment').classList.remove('hidden');
+    });
+    qs('#btnBackToInfo').addEventListener('click', ()=>{
+      qs('#checkout-info').classList.remove('hidden');
+      qs('#checkout-payment').classList.add('hidden');
+    });
+    qs('#btnToReview').addEventListener('click', ()=>{
+      qs('#checkout-payment').classList.add('hidden');
+      qs('#checkout-review').classList.remove('hidden');
+      populateReview();
+    });
+    qs('#btnBackToPayment').addEventListener('click', ()=>{
+      qs('#checkout-payment').classList.remove('hidden');
+      qs('#checkout-review').classList.add('hidden');
+    });
+
+    qs('#applyCoupon').addEventListener('click', ()=>{
+      const code = qs('#coupon').value.trim();
+      if(!code){ couponApplied = {code:null, discount:0}; saveAll(); renderSummary(); return alert('Digite um cupom.'); }
+      // demo: se código "MILLY10" => 10% off
+      if(code.toUpperCase()==='MILLY10'){ couponApplied = {code:'MILLY10', discount:0.10}; alert('Cupom aplicado: 10%'); }
+      else { couponApplied = {code:null, discount:0}; alert('Cupom inválido.'); }
+      saveAll(); renderSummary();
+    });
+
+    function populateReview(){
+      const list = qs('#reviewList'); list.innerHTML='';
+      cart.forEach(ci=>{
+        const p = products.find(x=>x.id===ci.id);
+        const el = document.createElement('div');
+        el.style.display='flex';
+        el.style.justifyContent='space-between';
+        el.style.marginBottom='8px';
+        el.innerHTML = `<div>${p.name} x${ci.qty}</div><div>${money(p.price*ci.qty)}</div>`;
+        list.appendChild(el);
+      });
+    }
+
+    qs('#btnFinish').addEventListener('click', ()=>{
+      const name = qs('#custName').value.trim() || 'Cliente';
+      const address = qs('#custAddress').value.trim() || '';
+      const method = (document.querySelector('input[name="method"]:checked')||{}).value || 'money';
+      if(cart.length===0){ return alert('Carrinho vazio.'); }
+      // prepare message
+      let subtotal = 0;
+      let itemsTxt = cart.map(ci=>{
+        const p = products.find(x=>x.id===ci.id);
+        const s = p.price * ci.qty;
+        subtotal += s;
+        return `${p.name} x${ci.qty} - ${money(s)}`;
+      }).join('\\n');
+      const discount = couponApplied.discount ? (subtotal * couponApplied.discount) : 0;
+      const total = (subtotal - discount);
+      // store order
+      const order = {
+        id: uid('order'),
+        items: cart.slice(),
+        customer: name,
+        address,
+        method,
+        total,
+        createdAt: new Date().toISOString()
+      };
+      orders.push(order); store.set('ma_orders', orders);
+      // Build WhatsApp message
+      const waNumber = settings.whatsapp || '558291016562';
+      const text = encodeURIComponent(`Olá, tenho um pedido:%0A${itemsTxt}%0A%0ANome: ${name}%0A${address? 'Endereço: '+address+'%0A':''}Pagamento: ${method}%0ATotal: ${money(total)}%0A%0AObrigado!`);
+      const waUrl = `https://wa.me/${waNumber}?text=${text}`;
+      // clear cart
+      cart = []; saveAll();
+      updateCartCount(); renderSummary();
+      // redirect to WhatsApp
+      window.open(waUrl, '_blank');
+      alert('Você será redirecionado ao WhatsApp para concluir o pedido.');
+      showPage('orders');
+    });
+
+    /* ---------- Small helpers ---------- */
+    function saveAll(){
+      store.set('ma_products', products);
+      store.set('ma_categories', categories);
+      store.set('ma_settings', settings);
+      store.set('ma_cart', cart);
+      store.set('ma_wishlist', wishlist);
+      store.set('ma_orders', orders);
+      store.set('ma_admin', isAdmin);
+      store.set('ma_coupon', couponApplied);
+    }
+
+    function renderAll(){
+      renderCategoriesFilter();
+      renderRecommended();
+      renderProductsGrid(filterCategory.value || 'all', searchInput.value.toLowerCase());
+      renderWishlist();
+      renderManage();
+      renderCategories();
+      renderSettingsForm();
+      renderSummary();
+      updateCartCount();
+      // populate filter dropdown to reflect categories
+      const catSel = qs('#filterCategory');
+      catSel.value = catSel.value || 'all';
+    }
+
+    // category page opener
+    function openCategory(cat){
+      showPage('products');
+      filterCategory.value = cat;
+      renderProductsGrid(cat, searchInput.value.toLowerCase());
+    }
+
+    /* ---------- Event bindings ---------- */
+    qs('#btnViewProducts').addEventListener('click', ()=> {
+      showPage('products');
+      renderProductsGrid();
+    });
+    qs('#btnWishlist').addEventListener('click', ()=> {
+      showPage('wishlist');
+      renderWishlist();
+    });
+    qsa('[data-page="admin"]').forEach(x=>x.addEventListener('click', ()=> showPage('admin')));
+    qs('#openManage').addEventListener('click', ()=> showPage('manage'));
+    qs('#openCategories').addEventListener('click', ()=> showPage('categories'));
+    qs('#openSettings').addEventListener('click', ()=> showPage('settings'));
+
+    qs('#btnAddProduct').addEventListener('click', ()=> {
+      if(!isAdmin) return alert('Somente admin pode criar produtos.');
+      openNewProduct();
+    });
+
+    qs('#newProductBtn')?.addEventListener('click', ()=> {
+      if(!isAdmin) return alert('Somente admin pode criar produtos.');
+      openNewProduct();
+    });
+
+    qs('#btnNewCategory').addEventListener('click', ()=> {
+      if(!isAdmin) return alert('Somente admin pode criar categorias.');
+      openNewCategory();
+    });
+
+    qs('#btnViewProducts').addEventListener('click', ()=> showPage('products'));
+
+    filterCategory.addEventListener('change', ()=> renderProductsGrid(filterCategory.value, searchInput.value.toLowerCase()));
+
+    // search
+    searchInput.addEventListener('input', ()=>{
+      renderProductsGrid(filterCategory.value || 'all', searchInput.value.toLowerCase());
+    });
+
+    // initial bindings
+    qs('#nav-admin')?.addEventListener('click', ()=> showPage('admin'));
+    qs('#nav-manage')?.addEventListener('click', ()=> showPage('manage'));
+    qs('#nav-cats')?.addEventListener('click', ()=> showPage('categories'));
+    qs('#nav-settings')?.addEventListener('click', ()=> showPage('settings'));
+
+    // Manage page import/export (simple)
+    qs('#syncBtn').addEventListener('click', ()=>{
+      const asText = JSON.stringify({products,categories,settings},null,2);
+      if(confirm('Exportar dados para copiar para área de transferência? (OK = copiar)\n(Para importar, cole aqui e sobrescreva a variável)')){
+        navigator.clipboard?.writeText(asText).then(()=> alert('Dados copiados!'));
+      }
+    });
+
+    // Init default structures if empty
+    if(!Array.isArray(products) || products.length===0) products = DEFAULT_PRODUCTS;
+    if(!Array.isArray(categories) || categories.length===0) categories = DEFAULT_CATEGORIES;
+    if(!settings) settings = DEFAULT_SETTINGS;
+    couponApplied = store.get('ma_coupon', couponApplied);
+
+    // small helper for escaping HTML values in inputs
+    function escapeHtml(s){ return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'); }
+
+    // On load
+    (function init(){
+      // Apply admin state
+      if(isAdmin){
+        modeLabel.innerText='Administrador';
+        btnAdmin.style.display='none';
+        btnLogout.style.display='inline-flex';
+      } else {
+        modeLabel.innerText='Visitante';
+        btnLogout.style.display='none';
+      }
+      renderAll();
+      showPage('home');
+    })();
+
+    // small UX: click outside to close modals done above
+
+    /* End of script */
+  </script>
+</body>
+</html>
